@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-
+using System.Windows.Threading;
 using NLog;
 
 namespace FactorioSync2
@@ -89,6 +91,12 @@ namespace FactorioSync2
 
                     LogString($"Vérification du fichier {originalFile} vers le répertoire {destFolder}", lstBox);
 
+                    if (lstBox != null)
+                    {
+                        lstBox.Refresh();
+                        Thread.Sleep(50);
+                    }
+
                     if (destFile.Exists)
                     {
                         LogString($"Le fichier {destFile} existe déja !", lstBox);
@@ -107,7 +115,7 @@ namespace FactorioSync2
                         }
                         else
                         {
-                            LogString($"Les fichiers sont identiques", lstBox, ErrorLvl.Info, "succes");
+                            LogString($"Les fichiers sont identiques {originalFile} : {originalFile.LastWriteTimeUtc}", lstBox, ErrorLvl.Info, "succes");
                         }
                     }
                     else
@@ -133,6 +141,15 @@ namespace FactorioSync2
 
             LogString($"Fin : {DateTime.Now}", lstBox);
             LogString("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*", lstBox);
+        }
+    }
+
+    public static class ExtensionMethods
+    {
+        private static readonly Action EmptyDelegate = delegate { };
+        public static void Refresh(this UIElement uiElement)
+        {
+            uiElement.Dispatcher.Invoke(DispatcherPriority.Render, EmptyDelegate);
         }
     }
 }

@@ -4,73 +4,125 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FactorioSync2"
+
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+
         mc:Ignorable="d"
         Title="MainWindow" 
         Height="450" 
         Width="800"
-        Loaded="Window_Loaded">
+        MinHeight="450"
+        MinWidth="600"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+
+        Loaded="Window_Loaded"
+        MouseDown="MainWindow_OnMouseDown"
+        PreviewKeyUp="MainWindow_OnPreviewKeyUp">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="15*"/>
-            <ColumnDefinition Width="29*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <!-- Source -->
-        <Label x:Name="LblSource" 
-               Content="Source :" 
-               HorizontalAlignment="Left" 
-               Margin="10,10,0,0" 
-               VerticalAlignment="Top"/>
 
-        <TextBox x:Name="TxtSource" 
-                 Height="23" 
-                 Margin="91,10,10,0" 
-                 TextWrapping="Wrap" 
-                 Text="{Binding Source, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                 VerticalAlignment="Top" 
-                 Grid.ColumnSpan="2" 
-                 TextChanged="TxtSource_OnTextChanged"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+        <!-- Source -->
+        <DockPanel Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Grid.Row="1"
+                   Margin="10"
+                   VerticalAlignment="Center"
+                   LastChildFill="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="LblSource"
+                       Grid.Column="0"
+                       Content="Source :"/>
+
+                <TextBox x:Name="TxtSource" 
+                         Grid.Column="1"
+                        TextWrapping="Wrap" 
+                        Text="{Binding Source, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        TextChanged="TxtSource_OnTextChanged"/>
+            </Grid>
+        </DockPanel>
 
         <!-- Destination -->
-        <Label x:Name="LblDestination" 
-               Content="Destination :" 
-               HorizontalAlignment="Left" 
-               Margin="10,41,0,0" 
-               VerticalAlignment="Top"/>
+        <DockPanel Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Grid.Row="2"
+                   Margin="10"
+                   VerticalAlignment="Center"
+                   LastChildFill="True">
 
-        <TextBox x:Name="TxtDestination" 
-                 Height="23" 
-                 Margin="91,44,10,0" 
-                 TextWrapping="Wrap" 
-                 Text="{Binding Destination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                 VerticalAlignment="Top" 
-                 Grid.ColumnSpan="2" 
-                 TextChanged="TxtDestination_OnTextChanged"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-        <Button x:Name="BtnGo" 
+                <Label x:Name="LblDestination" 
+                       Grid.Column="0"
+                   Content="Destination :"/>
+
+                <TextBox x:Name="TxtDestination" 
+                         Grid.Column="1"
+                         TextWrapping="Wrap" 
+                         Text="{Binding Destination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         TextChanged="TxtDestination_OnTextChanged"/>
+            </Grid>
+        </DockPanel>
+
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="10"
+                    HorizontalAlignment="Right">
+            <Button x:Name="BtnGo" 
                 Content="Go !" 
-                HorizontalAlignment="Right" 
-                Margin="0,72,10,0" 
-                VerticalAlignment="Top" 
-                Width="77" Height="34" 
-                Click="BtnGo_Click" 
-                Grid.Column="1"/>
+                Width="100" 
+                Height="30" 
+                Margin="0, 0, 5, 0"
+                Click="BtnGo_Click"/>
 
-        <Button x:Name="BtnReset" 
-                Content="Reset" Grid.Column="1" 
-                HorizontalAlignment="Left" 
-                Margin="343,79,0,0" 
+            <Button x:Name="BtnReset" 
+                Content="Reset" 
+                HorizontalAlignment="Right" 
                 VerticalAlignment="Top" 
-                Width="75" 
+                Width="100" 
+                Height="30"
+                Margin="5, 0, 0, 0"
                 Click="BtnReset_Click"/>
+        </StackPanel>
 
         <GroupBox x:Name="groupBox" 
+                  Grid.Column="0"
+                  Grid.Row="4"
+                  Margin="10"
                   Header="Logs" 
-                  Margin="10,111,10,10" 
                   Grid.ColumnSpan="2">
             <ListBox x:Name="listBox" 
-                     Margin="5,5,5,5" 
+                     Margin="5" 
                      VerticalContentAlignment="Stretch" 
-                     Background="#FFCFCFCF"/>
+                     Background="#FFEFEFEF"/>
         </GroupBox>
 
     </Grid>
